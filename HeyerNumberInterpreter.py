@@ -6,6 +6,7 @@ unsigned = Image("90009:90009:90009:90009:09990")
 signed = Image("99999:00900:00900:00900:99999")
 floating = Image("09990:09000:09900:09000:09000")
 character = Image("09999:90000:90000:90000:09999")
+all_types = [unsigned, signed, floating, character]
 
 screen = 0
 bit_on_intensity = 5
@@ -84,14 +85,13 @@ while True:
                     j = i - 25
                     if j == 0:
                         microbit.display.clear()
-                else:
-                    # hold ??
-                    if i == 32:
+                if i == 32:
                         screen = (screen + 1) % 2
 
     if screen == 1:
         microbit.display.clear()
-        display.scroll("Press A to Select Data Type")
+        display.show(all_types)
+        display.show(Image.ARROW_E)
         d = -1
         while True:
             if button_a.was_pressed():
@@ -104,7 +104,7 @@ while True:
                     display.show(floating)
                 if d == 3:
                     display.show(character)
-            if button_a.was_pressed and button_b.was_pressed():
+            if button_b.was_pressed():
                 if d == 0:
                     display.scroll(int(''.join(str(i) for i in bit_pattern)))
                 if d == 1:
@@ -113,5 +113,3 @@ while True:
                     display.scroll("Unimplemented")
                 if d == 3:
                     display.scroll("Unimplemented")
-
-
