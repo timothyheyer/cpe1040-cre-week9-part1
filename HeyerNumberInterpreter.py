@@ -131,4 +131,6 @@ while True:
                     #hold
                     microbit.display.clear()
                     break
+        bit_pattern.clear()
+        i = 0
         screen = 0
