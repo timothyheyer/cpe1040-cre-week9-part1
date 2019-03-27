@@ -63,7 +63,7 @@ while True:
                     pass
                 if utime.ticks_ms() - start_ms >= hold_ms:
                     screen = (screen + 1) % 2
-                if led_value == 1:
+                elif led_value == 1:
                     if i < 25:
                         display.set_pixel(i % 5, i // 5, bit_on_intensity)
                     else:
@@ -73,7 +73,7 @@ while True:
                     j = i - 25
                     if j == 0:
                         microbit.display.clear()
-                if led_value != 1:
+                elif led_value != 1:
                     if i < 25:
                         display.set_pixel(i % 5, i // 5, 0)
                     else:
@@ -83,7 +83,7 @@ while True:
                     j = i - 25
                     if j == 0:
                         microbit.display.clear()
-                if i == 32:
+                elif i == 32:
                     screen = (screen + 1) % 2
 
     if screen == 1:
