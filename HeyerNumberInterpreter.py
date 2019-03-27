@@ -107,9 +107,13 @@ while True:
             if button_b.was_pressed():
                 if d == 0:
                     display.scroll(int(''.join(str(i) for i in bit_pattern)))
+                    display.show(unsigned)
                 if d == 1:
                     display.scroll("Unimplemented")
+                    display.show(signed)
                 if d == 2:
                     display.scroll("Unimplemented")
+                    display.show(floating)
                 if d == 3:
                     display.scroll("Unimplemented")
+                    display.show(character)
