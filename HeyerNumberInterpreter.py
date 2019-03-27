@@ -59,7 +59,7 @@ while True:
                     else:
                         display.set_pixel(j % 5, j // 5, 0)
 
-            if button_b.is_pressed():
+            if button_b.was_pressed():
                 start_ms = utime.ticks_ms()
                 while button_b.is_pressed():
                     pass
