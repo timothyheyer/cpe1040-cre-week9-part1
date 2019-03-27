@@ -113,7 +113,10 @@ while True:
                 if utime.ticks_ms() - start_ms < hold_ms:
                     #simple press
                     if d == 0:
-                        display.scroll(int(''.join(str(i) for i in bit_pattern)))
+                        if len(bit_pattern) > 0:
+                            display.scroll(int(''.join(str(i) for i in bit_pattern)))
+                        else:
+                            display.scroll("No Value")
                         display.show(unsigned)
                     if d == 1:
                         display.scroll("Unimplemented")
