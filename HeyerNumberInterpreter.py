@@ -70,6 +70,8 @@ while True:
                         display.set_pixel(j % 5, j // 5, bit_on_intensity)
                     bit_pattern.append('1')
                     i = len(bit_pattern)
+                    current_led_value = 0
+                    led_value = 0
                     j = i - 25
                     if j == 0:
                         microbit.display.clear()
