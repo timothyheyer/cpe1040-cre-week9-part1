@@ -21,7 +21,7 @@ blink_half_period = 500  # half a second
 blink_value = 0
 blink_ms = utime.ticks_ms()
 current_led_value = 0  # off
-hold_ms = 100000000  # hold threshold
+hold_ms = 500  # hold threshold
 
 while True:
     if screen == 0:
@@ -61,32 +61,34 @@ while True:
 
             if button_b.is_pressed():
                 start_ms = utime.ticks_ms()
-                while True:
-                    if button_b.is_pressed():
-                        break
-                if utime.ticks_diff(utime.ticks_ms(), start_ms) < hold_ms and led_value == 1:
+                while button_b.is_pressed():
+                    pass
+                if utime.ticks_ms() - start_ms < hold_ms:
                     # simple press
-                    if i < 25:
-                        display.set_pixel(i % 5, i // 5, bit_on_intensity)
-                    else:
-                        display.set_pixel(j % 5, j // 5, bit_on_intensity)
-                    bit_pattern.append('1')
-                    i = len(bit_pattern)
-                    j = i - 25
-                    if j == 0:
-                        microbit.display.clear()
-                if utime.ticks_diff(utime.ticks_ms(), start_ms) < hold_ms and led_value != 1:
-                    if i < 25:
-                        display.set_pixel(i % 5, i // 5, 0)
-                    else:
-                        display.set_pixel(j % 5, j // 5, 0)
-                    bit_pattern.append('0')
-                    i = len(bit_pattern)
-                    j = i - 25
-                    if j == 0:
-                        microbit.display.clear()
+                    if led_value == 1:
+                        if i < 25:
+                            display.set_pixel(i % 5, i // 5, bit_on_intensity)
+                        else:
+                            display.set_pixel(j % 5, j // 5, bit_on_intensity)
+                        bit_pattern.append('1')
+                        i = len(bit_pattern)
+                        j = i - 25
+                        if j == 0:
+                            microbit.display.clear()
+                    if led_value != 1:
+                        if i < 25:
+                            display.set_pixel(i % 5, i // 5, 0)
+                        else:
+                            display.set_pixel(j % 5, j // 5, 0)
+                        bit_pattern.append('0')
+                        i = len(bit_pattern)
+                        j = i - 25
+                        if j == 0:
+                            microbit.display.clear()
                 if i == 32:
-                        screen = (screen + 1) % 2
+                    screen = (screen + 1) % 2
+                if utime.ticks_ms() - start_ms >= hold_ms:
+                    screen = (screen + 1) % 2
 
     if screen == 1:
         microbit.display.clear()
@@ -104,16 +106,27 @@ while True:
                     display.show(floating)
                 if d == 3:
                     display.show(character)
-            if button_b.was_pressed():
-                if d == 0:
-                    display.scroll(int(''.join(str(i) for i in bit_pattern)))
-                    display.show(unsigned)
-                if d == 1:
-                    display.scroll("Unimplemented")
-                    display.show(signed)
-                if d == 2:
-                    display.scroll("Unimplemented")
-                    display.show(floating)
-                if d == 3:
-                    display.scroll("Unimplemented")
-                    display.show(character)
+            if button_b.is_pressed():
+                start_ms = utime.ticks_ms()
+                while button_b.is_pressed():
+                    pass
+                if utime.ticks_ms() - start_ms < hold_ms:
+                    # simple press
+                    if d == 0:
+                        display.scroll(int(''.join(str(i) for i in bit_pattern)))
+                        display.show(unsigned)
+                    if d == 1:
+                        display.scroll("Unimplemented")
+                        display.show(signed)
+                    if d == 2:
+                        display.scroll("Unimplemented")
+                        display.show(floating)
+                    if d == 3:
+                        display.scroll("Unimplemented")
+                        display.show(character)
+                if utime.ticks_ms() - start_ms >= hold_ms:
+                    # hold
+                    break
+
+        microbit.display.clear()
+        screen = 0
