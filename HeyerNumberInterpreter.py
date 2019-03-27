@@ -85,7 +85,7 @@ while True:
                     j = i - 25
                     if j == 0:
                         microbit.display.clear()
-                elif i == 32:
+                if i == 32:
                     screen = (screen + 1) % 2
 
     if screen == 1:
@@ -112,6 +112,8 @@ while True:
                     microbit.display.clear()
                     bit_pattern.clear()
                     i = 0
+                    led_value = 0
+                    current_led_value = 0
                     screen = 0
                     break
                 if d == 0:
