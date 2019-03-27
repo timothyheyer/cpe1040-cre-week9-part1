@@ -106,12 +106,12 @@ while True:
                     display.show(floating)
                 if d == 3:
                     display.show(character)
-            if button_b.is_pressed():
+            if button_b.was_pressed():
                 start_ms = utime.ticks_ms()
                 while button_b.is_pressed():
                     pass
                 if utime.ticks_ms() - start_ms < hold_ms:
-                    # simple press
+                    #simple press
                     if d == 0:
                         display.scroll(int(''.join(str(i) for i in bit_pattern)))
                         display.show(unsigned)
@@ -124,9 +124,8 @@ while True:
                     if d == 3:
                         display.scroll("Unimplemented")
                         display.show(character)
-                if utime.ticks_ms() - start_ms >= hold_ms:
-                    # hold
+                else:
+                    #hold
+                    microbit.display.clear()
                     break
-
-        microbit.display.clear()
         screen = 0
