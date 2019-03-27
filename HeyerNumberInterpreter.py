@@ -114,7 +114,7 @@ while True:
                     #simple press
                     if d == 0:
                         if len(bit_pattern) > 0:
-                            display.scroll(int(''.join(str(i) for i in bit_pattern)))
+                            display.scroll(int(''.join(str(i) for i in bit_pattern), 2))
                         else:
                             display.scroll("No Value")
                         display.show(unsigned)
